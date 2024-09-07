@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 const inventorySchema = new mongoose.Schema({
-  stationId: String,
-  item: String,
-  quantity: Number,
-  lastUpdated: { type: Date, default: Date.now }
+  station: { type: String, required: true },
+  cargoItems: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Cargo' }],
+  capacity: { type: Number, required: true },
+  occupied: { type: Number, required: true }
 });
 
 module.exports = mongoose.model('Inventory', inventorySchema);

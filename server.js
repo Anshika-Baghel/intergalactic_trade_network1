@@ -1,36 +1,38 @@
 const express = require('express');
-const http = require('http');
-const socketIO = require('socket.io');
 const mongoose = require('mongoose');
-const tradeRoutes = require('./routes/routes/trade');
-const cargoRoutes = require('./routes/cargo');
-const inventoryRoutes = require('./routes/inventory');
+const dotenv = require('dotenv');
+const http = require('http');
+const socketIo = require('socket.io');
+const tradeRoutes = require('./routes/tradeRoutes');
+const cargoRoutes = require('./routes/cargoRoutes');
 
+dotenv.config();
+
+// Initialize app and server
 const app = express();
 const server = http.createServer(app);
-const io = socketIO(server);
+const io = socketIo(server);
 
-// Middleware
+// Middleware for JSON
 app.use(express.json());
-app.use('/api/trades', tradeRoutes);
-app.use('/api/cargo', cargoRoutes);
-app.use('/api/inventory', inventoryRoutes);
 
-// WebSocket for real-time updates
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.log('Error: ', err));
+
+// WebSocket connection
 io.on('connection', (socket) => {
-  console.log('New WebSocket connection');
-  socket.on('trade-update', (data) => {
-    io.emit('trade-update', data); // Broadcast trade update
-  });
+  console.log('New client connected');
+  socket.on('disconnect', () => console.log('Client disconnected'));
 });
 
-// MongoDB connection
-mongoose.connect('mongodb://localhost:27017/intergalactic-trade', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+// Define Routes
+app.use('/api/trade', tradeRoutes(io));  // Pass io to route for real-time updates
+app.use('/api/cargo', cargoRoutes);
 
-const PORT = process.env.PORT || 5000;
+// Listen to port
+const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

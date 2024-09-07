@@ -1,12 +1,10 @@
 const mongoose = require('mongoose');
 
 const tradeSchema = new mongoose.Schema({
-  buyer: String,
-  seller: String,
-  item: String,
-  quantity: Number,
-  price: Number,
-  status: { type: String, default: 'pending' }, // pending, completed, canceled
+  origin: { type: String, required: true },
+  destination: { type: String, required: true },
+  cargo: { type: mongoose.Schema.Types.ObjectId, ref: 'Cargo', required: true },
+  status: { type: String, enum: ['initiated', 'in-transit', 'completed'], default: 'initiated' },
   timestamp: { type: Date, default: Date.now }
 });
 
