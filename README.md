@@ -39,20 +39,13 @@ Using Postman or curl
 Get Trade by Transaction ID:
 
 Sample test case:
- GET http://localhost:5000/api/trade/60e9fbb10e849303dcae2bd7
-Expected sample Response result:
+ GET http://localhost:5000/api/trade/:id
 
-json
-{
-  "_id": "60e9fbb10e849303dcae2bd7",
-  "item": "Rare Minerals",
-  "status": "In Transit",
-  "origin": "Earth",
-  "destination": "Mars"
-}
+
+
 Get Cargo by Shipment ID:
 
-GET http://localhost:5000/api/cargo/60e9fbb10e849303dcae2bd4
+GET http://localhost:5000/api/cargo:shipment_id
 Get Inventory by Space Station ID:
 
 GET http://localhost:5000/api/inventory/earth_station
