@@ -1,4 +1,4 @@
-Welcome to the intergalactic_trade_network1 wiki!
+Welcome to the intergalactic_trade_network1 
 1. Design Decisions and Architectural Choices
 Overview
 The Intergalactic Trade Network is a backend system designed to handle trade transactions, manage space cargo, and track space station inventory across multiple planets and space stations. The system is built to handle high-throughput data and provide real-time updates on trade activities and cargo statuses. The architecture is built with scalability and performance in mind.
@@ -45,7 +45,7 @@ Sample test case:
 
 Get Cargo by Shipment ID:
 
-GET http://localhost:5000/api/cargo:shipment_id
+GET http://localhost:5000/api/cargo/:shipment_id
 Get Inventory by Space Station ID:
 
 GET http://localhost:5000/api/inventory/earth_station
