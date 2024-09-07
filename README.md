@@ -54,6 +54,7 @@ GET http://localhost:5000/api/inventory/earth_station
 POST request to add cargo,inventory entries:
 
 POST http://localhost:5000/api/cargo
+
 POST http://localhost:5000/api/inventory
 
 4. Known Limitations and Potential Improvements
